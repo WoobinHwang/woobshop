@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <title>회원 가입</title>
+
+    <style>
+        .borderline {
+            border:solid;
+            width: 900px;
+            margin: auto;
+        }
+    </style>
+
+    <script>
+        function Duplicate() {
+            let id = $('#post-id').val()
+
+            $.ajax({
+                type: "POST",
+                url: "/duplicate",
+                data: {id_give: id,},
+                success: function (response) { // 성공하면
+                    alert(response["msg"]);
+
+                }
+            })
+        }
+
+        function sign_up() {
+            let id = $('#post-id').val();
+            let password = $('#post-password').val();
+            let human = $('input[name="list"]:checked').val();
+
+            if (human == "yes"){
+                if (password == "") {
+                    alert("비밀번호를 입력해주세요.")
+                }
+                else {
+                    $.ajax({
+                            type: "POST",
+                            url: "/sign_up",
+                            data: {id_give:id, password_give:password,},
+                    success: function (response) { // 성공하면
+                        if (response["msg"] == "등록 성공!") {
+                            alert(response["msg"]);
+                            location.href = 'http://localhost:5000/loginpage';
+                            // location.href = 'http://woobin.shop/loginpage';
+                        }
+                        else {
+                            alert(response["msg"]);
+                        }
+                    }
+                    })
+                }
+            }
+            else{
+                alert("먼저 사람이 되어주세요!");
+            }
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="borderline">
+
+        <h1>나만의 상점 회원 등록입니다.</h1>
+
+        <div>
+            당신은 사람입니까?
+            <label>Yes <input type="radio" name="list" value="yes"></label>
+            <label>No <input type="radio" name="list" value="no"></label>
+        </div>
+        <div>
+            아이디: <input type = "text" id = "post-id">
+            <button type="submit" class="btn btn-primary" onclick="Duplicate()">중복확인</button>
+        </div>
+        <div>
+            비밀번호: <input type = "password" id = "post-password">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" onclick="sign_up()">등록하기</button>
+        </div>
+
+    </div>
+</body>
+</html>

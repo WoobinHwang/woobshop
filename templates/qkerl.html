@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        $(document).ready(function () {
+                    view_orders();
+                });
+        function view_orders() {
+
+            $.ajax({
+                type: "get",
+                url: "/qkewk",
+                data: {},
+                success: function (response) { // 성공하면
+                    // window.open(localhost:5000/qkewk['get'])
+
+                    alert(response["성공"]);
+                }
+            })
+        }
+        </script>
+</head>
+<body>
+    <div>{{qhsoa_receive}}</div>
+</body>
+</html>

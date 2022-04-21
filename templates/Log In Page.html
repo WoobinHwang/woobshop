@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <title>로그인 화면</title>
+
+    <script>
+        function Login() {
+            let id = $('#post-id').val();
+            let password = $('#post-password').val();
+            if (id == "") {
+                alert("아이디를 입력하세요.")
+            }
+            else if (password == ""){
+                alert("비밀번호를 입력하세요.")
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/login",
+                    data: {id_give: id, password_give: password,},
+                    success: function (response) { // 성공하면
+
+                        if (response["msg"] == "로그인 확인") {
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/mainpageconnec",
+                                data: {id_give: id,},
+                                success: function (response) { // 성공하면
+                                    // location.href = 'http://localhost:5000/';
+                                    // location.href = 'http://woobin.shop/signuppage';
+                                }
+                            })
+                        }
+                        else{
+                            alert(response["msg"]);
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+
+    <style>
+        .borderline {
+            border:solid;
+            width: 900px;
+            margin: auto;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="borderline">
+
+        <div>
+            아이디 : <input type = "text" id = "post-id">
+        </div>
+        <div>
+            비밀번호 : <input type = "password" id = "post-password">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" onclick="Login()">로그인</button>
+            <a href="http://localhost:5000/signuppage"><button type="submit" class="btn btn-primary" onclick="Duplicate()">회원 등록</button></a>
+<!--            <a href="http://woobin.shop/signup_page"><button type="submit" class="btn btn-primary" onclick="Duplicate()">회원 등록</button></a>-->
+
+<!--            <button type="submit" class="btn btn-primary" onclick="Duplicate()">아이디 찾기</button>-->
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+
+        function order() {
+            let name = $('#post-name').val()
+
+            $.ajax({
+                    type: "post",
+                    url: "/qhsoa",
+                    data: {name_give:name},
+                    success: function (response) { // 성공하면
+                        // window.open(localhost:5000/qkewk['get'])
+
+                        alert(response["성공"]);
+                    }
+                })
+
+
+        }
+
+    </script>
+
+</head>
+<body>
+    <p>주문자 성함: <input class="line1" type="text" id="post-name" /></p>
+    <button type="submit" class="btn btn-primary" onclick="order()">주문하기</button>
+</body>
+</html>
